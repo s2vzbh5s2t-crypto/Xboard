@@ -93,9 +93,6 @@ class Clash extends AbstractProtocol
         });
         $config['proxy-groups'] = array_values($config['proxy-groups']);
 
-        $config = $this->buildRules($config);
-
-
         $yaml = Yaml::dump($config, 2, 4, Yaml::DUMP_EMPTY_ARRAY_AS_SEQUENCE);
         $yaml = str_replace('$app_name', admin_setting('app_name', 'XBoard'), $yaml);
         return response($yaml)
@@ -104,20 +101,6 @@ class Clash extends AbstractProtocol
             ->header('profile-update-interval', '24')
             ->header('content-disposition', 'attachment;filename*=UTF-8\'\'' . rawurlencode($appName))
             ->header('profile-web-page-url', admin_setting('app_url'));
-    }
-
-    /**
-     * Build the rules for Clash.
-     */
-    public function buildRules($config)
-    {
-        // Force the current subscription domain to be a direct rule
-        $subsDomain = request()->header('Host');
-        if ($subsDomain) {
-            array_unshift($config['rules'], "DOMAIN,{$subsDomain},DIRECT");
-        }
-
-        return $config;
     }
 
     public static function buildShadowsocks($uuid, $server)
