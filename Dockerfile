@@ -18,7 +18,7 @@ COPY .docker /
 
 # Add build arguments
 ARG CACHEBUST=1
-ARG REPO_URL=https://github.com/cedar2025/Xboard
+ARG REPO_URL=https://github.com/s2vzbh5s2t-crypto/Xboard
 ARG BRANCH_NAME=master
 
 RUN echo "Attempting to clone branch: ${BRANCH_NAME} from ${REPO_URL} with CACHEBUST: ${CACHEBUST}" && \
